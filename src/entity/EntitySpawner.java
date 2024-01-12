@@ -1,5 +1,6 @@
 package entity;
 
+import constants.Constants;
 import rng.RandomNumberGenerator;
 
 import java.util.ArrayList;
@@ -8,7 +9,7 @@ public class EntitySpawner {
     public static ArrayList<Entity> spawnEntities(int numOfEntities){
         ArrayList<Entity> entities = new ArrayList<>();
         for (int i = 0; i < numOfEntities; i++){
-            Entity entity = new Entity(5);
+            Entity entity = new Entity(Constants.MUTATION_RATE);
             entity.setChromosome(generateRandomChromosome());
             entities.add(entity);
         }
