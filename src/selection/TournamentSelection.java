@@ -18,15 +18,16 @@ public class TournamentSelection {
             potentialParents.add(randomlySelect(entities));
         }
 
-        potentialParents.forEach(parent -> entities.remove(parent));
+        //potentialParents.forEach(parent -> entities.remove(parent));
+        entities.removeAll(potentialParents);
 
         potentialParents.removeAll(Collections.singleton(null)); // remove nulls if there are any
         Fitness.sortByFitness(potentialParents);
 
         ArrayList<Entity> parents = new ArrayList<>();
         if (potentialParents.size() >= 2){
-            parents.add(entities.get(0));
-            parents.add(entities.get(1));
+            parents.add(potentialParents.get(0));
+            parents.add(potentialParents.get(1));
             potentialParents.remove(0);
             potentialParents.remove(0);
             // entities that lost the tournament are put back. maybe shouldn't do this

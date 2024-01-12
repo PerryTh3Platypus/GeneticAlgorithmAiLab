@@ -46,6 +46,7 @@ public class Crossover {
     public static ArrayList<Integer> combineGeneticMaterial(ArrayList<Integer> chromosomeOne, ArrayList<Integer> chromosomeTwo){
         /* This function is biased. It will look at both parents' chromosomes and if one chromosome has the right
         *  tile in the right place, it will pick that one for the child. */
+
         ArrayList<Integer> childChromosome = new ArrayList<>();
         for (int i = 0; i < chromosomeOne.size(); i++){ // doesn't matter which chromosome you pick for size. They should both be the same size
             // the desired genetic (tile in this context) material
@@ -55,33 +56,35 @@ public class Crossover {
             // genetic material from parent two
             int tileFromParentTwo = chromosomeTwo.get(i);
             // if the genetic material from parent one is what we're looking for, then add it to the child
-            if(tileFromParentOne == desiredTile)
+            if(tileFromParentOne == desiredTile && !childChromosome.contains(desiredTile))
                 childChromosome.add(tileFromParentOne);
             // if not, try the other parent's genetic material
-            else if (tileFromParentTwo == desiredTile)
+            else if (tileFromParentTwo == desiredTile && !childChromosome.contains(desiredTile))
                 childChromosome.add(tileFromParentTwo);
             // else, just randomly pick genetic material from one of the parents and add it to the child
             else{
-                boolean addedGeneticMaterialToChild = false;
-                // generate a number, 0 or 1
-                int randomlyChosenChromosome = RandomNumberGenerator.generateNumber(0, 1);
-                while(!addedGeneticMaterialToChild){
-                    // if its 0, take genetic material from parent one
-                    if (randomlyChosenChromosome == 0){
-                        if (!childChromosome.contains(chromosomeOne.get(i))){
-                            childChromosome.add(chromosomeOne.get(i));
-                            addedGeneticMaterialToChild = true;
-                        }
-                    }
-                    // otherwise take it from parent two
-                    else
-                        childChromosome.add(chromosomeTwo.get(i));
+                ArrayList<Integer> randomlyChosenChromosome;
+                int coinFlip = RandomNumberGenerator.generateNumber(0, 1);
+                randomlyChosenChromosome = coinFlip == 0 ? chromosomeOne : chromosomeTwo;
+//                if (coinFlip == 0)
+//                    randomlyChosenChromosome = chromosomeOne;
+//                else
+//                    randomlyChosenChromosome = chromosomeTwo;
+                for (Integer geneticMaterial : randomlyChosenChromosome){
+                    if (!childChromosome.contains(geneticMaterial)){
+                        childChromosome.add(geneticMaterial);
+                        System.out.println("child chromosome: " + childChromosome);
+                        System.out.println("randomly chosen chromosome: " + randomlyChosenChromosome);
 
+                        break;
+                    }
                 }
+                System.out.println(Constants.solution);
 
             }
         }
-
+        System.out.println("child chromosome size: " + childChromosome.size());
+        System.out.println("finished child chromosome: " + childChromosome);
         return childChromosome;
     }
 }

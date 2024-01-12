@@ -21,7 +21,7 @@ public class EntitySpawner {
 
         ArrayList<Integer> chromosome = new ArrayList<>();
         while (!isDone){
-            int randomNumber = RandomNumberGenerator.generateNumber(0, 9);
+            int randomNumber = RandomNumberGenerator.generateNumber(0, 8);
             if (!chromosome.contains(randomNumber))
                 chromosome.add(randomNumber);
             else
