@@ -1,3 +1,4 @@
+import constants.Constants;
 import entity.Entity;
 import entity.EntitySpawner;
 import fitness.Fitness;
@@ -7,13 +8,23 @@ import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
-        ArrayList<Entity> entities = EntitySpawner.spawnEntities(100);
         ArrayList<Integer> solution = new ArrayList<>();
-        for(int i = 0; i < 10; i++){
+        for (int i = 0; i < 9; i++){
             solution.add(i);
         }
-        entities.forEach(entity -> Fitness.calculateFitness(entity, solution));
-        System.out.println(TournamentSelection.performTournamentSelection(entities).get(0).getChromosome());
+        Constants.solution = solution;
+        ArrayList<Entity> entities = EntitySpawner.spawnEntities(1);
+        Entity entity = entities.get(0);
+        Fitness.calculateFitness(entity, Constants.solution);
+        int startingFitness = entity.getFitness();
+        for(int i = 0; i < 1000000; i++){
+            entity.printChromosome();
+            entity.mutate();
+        }
+        Fitness.calculateFitness(entity, Constants.solution);
+        int fitness = entity.getFitness();
+        System.out.println("Starting fitness: " + startingFitness * 10 + "%");
+        System.out.println("Fitness after 1000000 mutations: " + fitness * 10 + "%");
     }
 
     public static void testChromosomesForUniqueness(int cycles){
