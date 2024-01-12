@@ -9,7 +9,7 @@ public class EntitySpawner {
     public static ArrayList<Entity> spawnEntities(int numOfEntities){
         ArrayList<Entity> entities = new ArrayList<>();
         for (int i = 0; i < numOfEntities; i++){
-            Entity entity = new Entity(Constants.MUTATION_RATE);
+            Entity entity = new Entity();
             entity.setChromosome(generateRandomChromosome());
             entities.add(entity);
         }

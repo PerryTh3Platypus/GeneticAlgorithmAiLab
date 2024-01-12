@@ -1,5 +1,6 @@
 package selection;
 
+import constants.Constants;
 import entity.Entity;
 import fitness.Fitness;
 import rng.RandomNumberGenerator;
@@ -8,13 +9,16 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class TournamentSelection {
-    public static final int TOURNAMENT_SIZE = 4;
+    public static final int TOURNAMENT_SIZE = Constants.TOURNAMENT_SIZE;
 
     public static ArrayList<Entity> performTournamentSelection(ArrayList<Entity> entities){
+        // does tournament selection and returns 2 parents
         ArrayList<Entity> potentialParents = new ArrayList<>();
         for (int i = 0; i < TOURNAMENT_SIZE; i++){
             potentialParents.add(randomlySelect(entities));
         }
+
+        potentialParents.forEach(parent -> entities.remove(parent));
 
         potentialParents.removeAll(Collections.singleton(null)); // remove nulls if there are any
         Fitness.sortByFitness(potentialParents);
@@ -25,7 +29,7 @@ public class TournamentSelection {
             parents.add(entities.get(1));
             potentialParents.remove(0);
             potentialParents.remove(0);
-
+            // entities that lost the tournament are put back. maybe shouldn't do this
             potentialParents.forEach(entity -> entities.add(entity));
         }
         else if (potentialParents.size() == 1){

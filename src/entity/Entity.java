@@ -13,9 +13,10 @@ public class Entity {
     private enum SlideDirections{
         UP, LEFT, RIGHT, DOWN
     }
+    private int generation = 1;
 
-    public Entity(int mutationRate){
-        this.mutationRate = mutationRate;
+    public Entity(){
+        this.mutationRate = Constants.MUTATION_RATE;
     }
 
     public void mutate(){
@@ -103,6 +104,7 @@ public class Entity {
     private void forceSlide(int slidingTileIndex){
         System.out.println("Nice slide failed. Force sliding.");
         ArrayList<SlideDirections> possibleDirections = findPossibleMoves(slidingTileIndex);
+
         SlideDirections direction = possibleDirections.get(RandomNumberGenerator.generateNumber(0, possibleDirections.size() - 1));
         int indexDiff;
         switch (direction){
@@ -192,5 +194,13 @@ public class Entity {
 
     public void setFitness(int fitness) {
         this.fitness = fitness;
+    }
+
+    public int getGeneration() {
+        return generation;
+    }
+
+    public void setGeneration(int generation) {
+        this.generation = generation;
     }
 }
