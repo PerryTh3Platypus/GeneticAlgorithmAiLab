@@ -23,6 +23,16 @@ public class Entity {
         }
     }
 
+    public void printChromosome(){
+        System.out.println("**********************************************");
+        System.out.println("Entity 0x" + Integer.toHexString(this.hashCode()).toUpperCase() + " has the following chromosome:");
+
+        for (int i = 0; i < 9; i+=3){
+            System.out.println("[ " + chromosome.get(i) + " " + chromosome.get(i + 1) + " " + chromosome.get(i + 2) + " ]");
+        }
+        System.out.println("**********************************************");
+    }
+
     public ArrayList<Integer> getChromosome() {
         return chromosome;
     }
